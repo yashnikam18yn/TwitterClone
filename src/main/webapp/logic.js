@@ -8,6 +8,7 @@ function getUser() {
 
 var userid;
 var tweets = [];
+var tweetid;
 
 // -------Sign In-------
 function SignUp() {
@@ -101,6 +102,7 @@ function addNewTweet() {
 		.then((res) => {tweetList(); res.json()})
 		.then(data => {
 			console.log(data)
+			tweetid=data.tweetId;
 			alert("Tweet ADD.")
 			
 		});
@@ -133,7 +135,7 @@ function mapTweet(tweets){
 		listString +=`<div class="card mb-3" style="max-width: 540px;">
 						<div class="row g-0">
 							<div class="col-md-4">
-								<img src=${tweets[i].user.userAvatar}class="img-fluid rounded-start" alt="...">
+								<img src="${tweets[i].user.userAvatar}" class="img-fluid rounded-start" alt="...">
 							</div>
 							<div class="col-md-8">
 								<div class="card-body">
@@ -156,7 +158,7 @@ function mapTweet(tweets){
 
 
 // ------------ My Tweets --------------
-function myTweet(){
+function myTweets(){
 	//var url = "http://localhost:8080/postbook/webapi/twitter/users/getUser";
 	
 	
@@ -205,5 +207,17 @@ function myTweet(tweets){
 	
 }
 
+
+function likeTweet(){
+	
+	fetch(`http://localhost:8080/postbook/webapi/twitter/tweets/likes/${tweetid}`,{
+		method:'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	})
+	.then((resp)=>resp.json())
+	.them((data)=>console.log(data))
+}
 
 
