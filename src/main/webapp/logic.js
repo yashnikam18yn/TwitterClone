@@ -142,7 +142,7 @@ function mapTweet(tweets){
 									<h5 class="card-title">${tweets[i].user.userName}</h5>
 									<p class="card-text">${tweets[i].tweetBody}.</p>
 									<p class="card-text">
-										<small class="text-body-secondary">Likes:${tweets[i].tweetLikes}</small>
+										<button class="text-body-secondary"  onclick="likeTweet(${tweets[i].tweetId})">Likes:${tweets[i].tweetLikes}</button>
 									</p>
 								</div>
 								
@@ -208,15 +208,17 @@ function myTweet(tweets){
 }
 
 
-function likeTweet(){
+function likeTweet(tweetId){
 	
-	fetch(`http://localhost:8080/postbook/webapi/twitter/tweets/likes/${tweetid}`,{
-		method:'POST',
+	fetch(`http://localhost:8080/postbook/webapi/twitter/tweets/likes/${tweetId}`,{
+		method:'PUT',
 		headers: {
 			'Content-Type': 'application/json'
 		}
 	})
-	.then((resp)=>resp.json())
+	.then((resp)=>{
+		tweetList();
+		resp.json()})
 	.them((data)=>console.log(data))
 }
 
